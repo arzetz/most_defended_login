@@ -1,5 +1,5 @@
 <template>
-    <div class="auth" :class="{ 'auth-leaving': isLeaving }">
+    <div class="auth" :class="{ 'auth-leaving': isLeaving, 'page-enter': isEntered }">
       <h1>Регистрация</h1>
       <form @submit.prevent="submitRegister" class="auth_inner">
         <input v-model="email" type="email" placeholder="Email" required />
@@ -7,7 +7,7 @@
         <input v-model="name" type="text" placeholder="Имя" required />
         <div class="button_section">
             <button type="submit" class="register_button">Зарегистрироваться</button>
-            <p>Есть аккаунт? 
+            <p style="width: 130px;">Есть аккаунт? 
                 <a href="#" @click.prevent="goToLogin" class="to_login_link">Войти</a>
             </p>
         </div>
@@ -17,12 +17,13 @@
   </template>
   
   <script lang="ts" setup>
-  import { ref } from 'vue'
+  import { ref, onMounted  } from 'vue'
   import axios from 'axios'
   
   const email = ref<string>('')
   const password = ref<string>('')
   const name = ref<string>('')
+  const isEntered = ref(true)
   const isLeaving = ref(false)
     import { useRouter } from 'vue-router'
     const router = useRouter()
@@ -34,15 +35,27 @@
       alert('Ошибка регистрации')
     }
   }
+
+  onMounted(() => {
+  setTimeout(() => {
+    isEntered.value = false
+  }, 1)
+})
+
   function goToLogin(): void {
   isLeaving.value = true
+  
   setTimeout(() => {
+   
     router.push('/login')
   }, 500) 
   }
   </script>
 
   <style>
+  .reg_p{
+    margin-top: 10px;
+  }
   .auth{
         text-align: center;
         max-width: 500px;
@@ -65,6 +78,11 @@
   transform: translateY(10px); 
   filter: blur(2px); 
 }
+.page-enter{
+  opacity: 0;
+  transform: translateY(10px); 
+  filter: blur(2px); 
+}
     .auth_inner{
         display: flex;
         flex-direction: column;
@@ -75,7 +93,10 @@
         flex-direction: row;
     }
     .register_button{
-        cursor: pointer;
+      width: 140px;
+      height: 40px;
+      cursor: pointer;
+      color: rgb(38, 38, 38);
     }
     .to_login_link{
       text-decoration: none;

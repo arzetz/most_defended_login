@@ -1,5 +1,5 @@
 <template>
-    <div class="auth" :class="{ 'auth-leaving': isLeaving }">
+    <div class="auth" :class="{ 'auth-leaving': isLeaving, 'page-enter': isEntered  }">
       <h1>Вход</h1>
       <form @submit.prevent="submitLogin" class="auth_inner">
         <input v-model="email" type="email" placeholder="Email" required />
@@ -16,12 +16,13 @@
   </template>
   
   <script lang="ts" setup>
-  import { ref } from 'vue'
+  import { ref, onMounted } from 'vue'
   import axios from 'axios'
   import { useRouter } from 'vue-router'
   const router = useRouter()
   const email = ref<string>('')
   const password = ref<string>('')
+  const isEntered = ref(true)
   const isLeaving = ref(false)
   async function submitLogin(): Promise<void> {
     try {
@@ -31,6 +32,13 @@
       alert('Ошибка входа')
     }
   }
+
+  onMounted(() => {
+  setTimeout(() => {
+    isEntered.value = false
+  }, 1)
+})
+
   function goToRegister(): void {
   isLeaving.value = true
   setTimeout(() => {
