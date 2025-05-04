@@ -4,7 +4,7 @@
       <form @submit.prevent="submitRegister" class="auth_inner">
         <input v-model="email" type="email" placeholder="Email" required />
         <input v-model="password" type="password" placeholder="Пароль" required />
-        <input v-model="name" type="text" placeholder="Имя" required />
+        <input v-model="phone" type="tel" placeholder="Телефон" required />
         <div class="button_section">
             <button type="submit" class="register_button">Зарегистрироваться</button>
             <p style="width: 130px;">Есть аккаунт? 
@@ -12,7 +12,9 @@
             </p>
         </div>
       </form>
-      
+    </div>
+    <div :class="{ 'auth-failed': registerFailed }">
+      {{thingFailed}}
     </div>
   </template>
   
@@ -22,14 +24,36 @@
   
   const email = ref<string>('')
   const password = ref<string>('')
-  const name = ref<string>('')
+  const phone = ref<string>('')
+  const thingFailed = ref<string>('')
+  const registerFailed = ref(false)
   const isEntered = ref(true)
   const isLeaving = ref(false)
-    import { useRouter } from 'vue-router'
-    const router = useRouter()
+  import { useRouter } from 'vue-router'
+  const router = useRouter()
   async function submitRegister(): Promise<void> {
+    if (!/^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(email.value)){
+      registerFailed.value = true
+      thingFailed.value = "Email гавно"
+      setTimeout(() => {
+        registerFailed.value = false
+        thingFailed.value = ""
+  }, 5000)                                                                           
+      return
+    }
+
+    if (!/^\+7[\d]{10}$/.test(phone.value)){
+      registerFailed.value = true
+      thingFailed.value = "Телефон гавно"
+      setTimeout(() => {
+        registerFailed.value = false
+        thingFailed.value = ""
+  }, 5000)                                                                           
+      return
+    }
+
     try {
-      await axios.post('/api/register', { email: email.value, password: password.value, name: name.value })
+      await axios.post('/api/register', { email: email.value, password: password.value, phone: phone.value })
       alert('Успешная регистрация!')
     } catch (err) {
       alert('Ошибка регистрации')
