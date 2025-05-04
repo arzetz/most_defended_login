@@ -11,7 +11,9 @@
         </p>
       </div>
       </form>
-     
+    </div>
+    <div :class="{ 'auth-failed': loginFailed }">
+      {{thingFailed}}
     </div>
   </template>
   
@@ -20,11 +22,24 @@
   import axios from 'axios'
   import { useRouter } from 'vue-router'
   const router = useRouter()
+  const thingFailed = ref<string>('')
   const email = ref<string>('')
   const password = ref<string>('')
   const isEntered = ref(true)
   const isLeaving = ref(false)
+  const loginFailed = ref(false)
   async function submitLogin(): Promise<void> {
+
+    if (!/^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(email.value)){
+      loginFailed.value = true
+      thingFailed.value = "Email гавно"
+      setTimeout(() => {
+        loginFailed.value = false
+        thingFailed.value = ""
+  }, 5000)                                                                           
+      return
+    }
+
     try {
       await axios.post('/api/login', { email: email.value, password: password.value })
       alert('Успешный вход!')
@@ -77,6 +92,15 @@
     .auth_inner{
         display: flex;
         flex-direction: column;
+    }
+    .auth-failed{
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      height: 30px;
+      transition: 0.5s ease;
+      background-color: red;
+      text-align: center;
     }
     .button_section{
       margin-top: 10px;
