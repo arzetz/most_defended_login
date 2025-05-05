@@ -41,7 +41,7 @@
     }
 
     try {
-      await axios.post('/api/login', { email: email.value, password: password.value })
+      await axios.post('http://localhost:8080/api/login', { email: email.value, password: password.value })
       alert('Успешный вход!')
     } catch (err) {
       alert('Ошибка входа')
