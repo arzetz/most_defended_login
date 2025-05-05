@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"main/db"
 	mw "main/middleware"
 
 	"github.com/gin-contrib/cors"
@@ -19,11 +17,8 @@ func main() {
 		c.Status(200)
 	})
 
-	r.PATCH("/api/connectdb", mw.ConnectHandler(c*gin.Context, database))
-	database, err := db.Connect()
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer database.Close()
+	r.PATCH("/api/connectdb", mw.ConnectHandler())
+	r.PATCH("/api/disconnectdb", mw.DisconnectHandler())
+
 	r.Run(":8080")
 } // Дописать подруб дб по кнопке на фронте
