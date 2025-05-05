@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"main/db"
+	mw "main/middleware"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -18,6 +19,7 @@ func main() {
 		c.Status(200)
 	})
 
+	r.PATCH("/api/connectdb", mw.ConnectHandler(c*gin.Context, database))
 	database, err := db.Connect()
 	if err != nil {
 		log.Fatal(err)
