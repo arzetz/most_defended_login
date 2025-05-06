@@ -34,7 +34,7 @@
   async function submitLogin(): Promise<void> {
     if (!/^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(email.value)){
       loginFailed.value = true
-      thingFailed.value = "Email гавно"
+      thingFailed.value = "Email некорректен"
       setTimeout(() => {
         loginFailed.value = false
         thingFailed.value = ""
