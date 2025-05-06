@@ -37,7 +37,7 @@
   async function submitRegister(): Promise<void> {
     if (!/^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(email.value)){
       registerFailed.value = true
-      thingFailed.value = "Email гавно"
+      thingFailed.value = "Email некорректен"
       setTimeout(() => {
         registerFailed.value = false
         thingFailed.value = ""
@@ -47,7 +47,7 @@
 
     if (!/^\+7[\d]{10}$/.test(phone.value)){
       registerFailed.value = true
-      thingFailed.value = "Телефон гавно"
+      thingFailed.value = "Телефон некорректен"
       setTimeout(() => {
         registerFailed.value = false
         thingFailed.value = ""
