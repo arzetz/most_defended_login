@@ -13,7 +13,7 @@ func main() {
 	r := gin.Default()
 	r.Use(cors.Default())
 	r.POST("/api/login", func(c *gin.Context) {
-		fmt.Println("Ооо бля")
+		fmt.Println("Ооо есть контакт")
 		c.Status(200)
 	})
 
