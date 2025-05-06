@@ -1,4 +1,5 @@
 <template>
+  <DbButton @update:is-connected="val => isConnected = val">{{ isConnected ? 'Выйти из бд' : 'Войти в бд' }}</DbButton>
     <div class="auth" :class="{ 'auth-leaving': isLeaving, 'page-enter': isEntered }">
       <h1>Регистрация</h1>
       <form @submit.prevent="submitRegister" class="auth_inner">
@@ -21,7 +22,8 @@
   <script lang="ts" setup>
   import { ref, onMounted  } from 'vue'
   import axios from 'axios'
-  
+  import DbButton from './DbButton.vue'
+
   const email = ref<string>('')
   const password = ref<string>('')
   const phone = ref<string>('')
@@ -29,6 +31,7 @@
   const registerFailed = ref(false)
   const isEntered = ref(true)
   const isLeaving = ref(false)
+  const isConnected = ref(false)
   import { useRouter } from 'vue-router'
   const router = useRouter()
   async function submitRegister(): Promise<void> {

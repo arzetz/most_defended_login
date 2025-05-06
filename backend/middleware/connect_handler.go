@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"main/db"
 
@@ -34,11 +35,12 @@ func DisconnectHandler() func(c *gin.Context) {
 			return
 		}
 		if err := GlobalDB.Close(); err != nil {
-			log.Println("ошибка при закрытии базы: %v", err)
+			log.Printf("ошибка при закрытии базы: %v", err)
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}
 		GlobalDB = nil
+		fmt.Println("\nНАС ЗАКРЫЛИ ЧУВААААК\n")
 		c.JSON(200, gin.H{"message": "БД успешно закрыта"})
 	}
 }

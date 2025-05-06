@@ -1,4 +1,5 @@
 <template>
+  <DbButton @update:is-connected="val => isConnected = val">{{ isConnected ? 'Выйти из бд' : 'Войти в бд' }}</DbButton>
     <div class="auth" :class="{ 'auth-leaving': isLeaving, 'page-enter': isEntered  }">
       <h1>Вход</h1>
       <form @submit.prevent="submitLogin" class="auth_inner">
@@ -18,6 +19,7 @@
   </template>
   
   <script lang="ts" setup>
+  import DbButton from './DbButton.vue'
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
   import { useRouter } from 'vue-router'
@@ -28,6 +30,7 @@
   const isEntered = ref(true)
   const isLeaving = ref(false)
   const loginFailed = ref(false)
+  const isConnected = ref(false)
   async function submitLogin(): Promise<void> {
     if (!/^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(email.value)){
       loginFailed.value = true

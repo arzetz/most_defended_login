@@ -16,7 +16,7 @@ func Connect() (*sql.DB, error) {
 	if err := database.Ping(); err != nil {
 		return nil, fmt.Errorf("ошибка пинга: %v", err)
 	} else {
-		fmt.Printf("ЧУВААААК")
+		fmt.Printf("ОТКРЫТО ЧУВААААК\n\n")
 	}
 	return database, nil
 }
