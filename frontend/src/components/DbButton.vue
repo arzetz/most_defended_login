@@ -24,7 +24,7 @@ async function handleClick(): Promise<void> {
     isConnected.value = true
     emit('update:is-connected', isConnected.value)
   } catch (err) {
-    alert("Дб не хочет ща подниматься, отъебитесь ваще");
+    alert("Дб не хочет ща подниматься");
   }
   }else{
     try {
@@ -33,7 +33,7 @@ async function handleClick(): Promise<void> {
     isConnected.value = false
     emit('update:is-connected', isConnected.value)
   } catch (err) {
-    alert("Дб положен, че ты доебался ваще");
+    alert("Дб положен");
     }
   }
 }
